@@ -25,6 +25,13 @@ def convert_to_xml(data):
             for subkey, subvalue in value.items():
                 subelement = ET.SubElement(element, subkey)
                 subelement.text = str(subvalue)
+        elif isinstance(value, list):
+            element = ET.SubElement(root, key)
+            for index, subvalue in enumerate(value):
+                subelement = ET.SubElement(element, "zainteresowanie")
+                subelement.text = str(subvalue)
+                subelement.set("id", str(index + 1))
+
         else:
             element = ET.SubElement(root, key)
             element.text = str(value)
