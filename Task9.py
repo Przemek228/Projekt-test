@@ -25,13 +25,11 @@ def convert_to_xml(data):
             for subkey, subvalue in value.items():
                 subelement = ET.SubElement(element, subkey)
                 subelement.text = str(subvalue)
-        elif isinstance(value, list):
+        elif key == "zainteresowania":
             element = ET.SubElement(root, key)
-            for index, subvalue in enumerate(value):
+            for subvalue in value:
                 subelement = ET.SubElement(element, "zainteresowanie")
                 subelement.text = str(subvalue)
-                subelement.set("id", str(index + 1))  # Dodanie atrybutu "id" do oznaczenia kolejności
-
         else:
             element = ET.SubElement(root, key)
             element.text = str(value)
@@ -56,7 +54,7 @@ def open_file():
                 elif element.tag == "zainteresowania":
                     text.insert(tk.END, "{}:\n".format(element.tag))
                     for subelement in element:
-                        text.insert(tk.END, "  {}. {}\n".format(subelement.get("id"), subelement.text))
+                        text.insert(tk.END, "  {}\n".format(subelement.text))
                 else:
                     text.insert(tk.END, "{}: {}\n".format(element.tag, element.text))
             text.insert(tk.END, "\n")
@@ -101,16 +99,16 @@ root.geometry("400x300")
 root.configure(bg="#F0F0F0")
 
 # Tworzenie przycisków
-open_button = tk.Button(root, text="Otwórz plik", command=open_file, font = ("Comic Sans MS", 14, "bold")
-, bg="#246100", fg="white")
+open_button = tk.Button(root, text="Otwórz plik", command=open_file, font=("Comic Sans MS", 14, "bold"),
+                        bg="#246100", fg="white")
 open_button.pack(pady=10)
 
-save_button = tk.Button(root, text="Zapisz dane", command=save_file, font = ("Comic Sans MS", 14, "bold")
-, bg="#046494", fg="white")
+save_button = tk.Button(root, text="Zapisz dane", command=save_file, font=("Comic Sans MS", 14, "bold"),
+                        bg="#046494", fg="white")
 save_button.pack(pady=10)
 
-clear_button = tk.Button(root, text="Wyczyść", command=clear_text, font = ("Comic Sans MS", 14, "bold")
-, bg="#8f0601", fg="white")
+clear_button = tk.Button(root, text="Wyczyść", command=clear_text, font=("Comic Sans MS", 14, "bold"),
+                         bg="#8f0601", fg="white")
 clear_button.pack(pady=10)
 
 # Tworzenie pola tekstowego
